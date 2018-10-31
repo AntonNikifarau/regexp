@@ -1,0 +1,3 @@
+(aa|bb)* ab a  aa bb aabbaa aabaa
+(a|b)*abb abb aaaa aabb babb
+(aa|bb)*((ab|ba)(aa|bb)*(ab|ba)(aa|bb)*)*  aaabba aabbaababaababa aabbaababababa
