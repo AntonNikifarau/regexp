@@ -7,19 +7,22 @@ import by.bsu.regexptree.RegExpTree;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.String.valueOf;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         String DELIMITER = " ";
         String testFile = "test.txt";
+        String resultFile = "result.txt";
         if (args.length > 0) {
             testFile = args[0];
         }
-        Files.lines(Paths.get(testFile)).map(str -> str.split(DELIMITER)).peek(strings -> {
+        List<String> results = Files.lines(Paths.get(testFile)).map(str -> str.split(DELIMITER)).peek(strings -> {
             if (strings.length > 1) {
                 RegExpTree regExpTree = RegExpTree.parse(strings[0]);
                 NSM nsm = regExpTree.toNSM();
@@ -29,6 +32,9 @@ public class Main {
                 }
             }
         }).map(strings -> Stream.of(strings).collect(joining(DELIMITER)))
-          .forEach(System.out::println);
+                .peek(System.out::println)
+                .collect(toList());
+
+        Files.write(Paths.get(resultFile), results);
     }
 }
